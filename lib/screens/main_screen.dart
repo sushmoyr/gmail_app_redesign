@@ -6,6 +6,7 @@ import 'package:gmail_app_redesign/data/models/email.dart';
 import 'package:gmail_app_redesign/widgets/avatar.dart';
 import 'package:gmail_app_redesign/widgets/background.dart';
 import 'package:gmail_app_redesign/widgets/background_selector.dart';
+import 'package:gmail_app_redesign/widgets/bottom_nav.dart';
 import 'package:gmail_app_redesign/widgets/drawer.dart';
 import 'package:gmail_app_redesign/widgets/home_appbar.dart';
 
@@ -15,13 +16,15 @@ class MainScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final BackgroundSelectorController _backgroundSelector =
       BackgroundSelectorController();
+  final ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: Colors.transparent,
       extendBodyBehindAppBar: false,
-      backgroundColor: Colors.black,
+      extendBody: true,
       drawer: SideDrawer(
         onThemeChooserClick: () {
           showModalBottomSheet(
@@ -42,6 +45,7 @@ class MainScreen extends StatelessWidget {
           ),
           SingleChildScrollView(
             physics: BouncingScrollPhysics(),
+            controller: _controller,
             child: Column(
               children: [
                 HomeAppBar(
@@ -59,6 +63,9 @@ class MainScreen extends StatelessWidget {
               ],
             ),
           ),
+          AnimatedBottomNavigation(
+            controller: _controller,
+          )
         ],
       )),
     );
