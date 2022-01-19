@@ -6,6 +6,10 @@ class BackgroundSelectorController extends ChangeNotifier {
     "assets/backgrounds/theme2.png",
     "assets/backgrounds/theme3.jpg",
     "assets/backgrounds/theme4.png",
+    "assets/backgrounds/theme5.jpg",
+    "assets/backgrounds/theme6.jpg",
+    "assets/backgrounds/theme7.jpg",
+    "assets/backgrounds/theme8.jpg",
   ];
 
   String selectedAsset = backgrounds[0];

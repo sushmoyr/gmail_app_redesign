@@ -41,29 +41,30 @@ class _BackgroundSelectorState extends State<BackgroundSelector> {
               SizedBox(
                 height: 16,
               ),
-              GridView.builder(
-                itemCount: images.length,
-                shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.5,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
+              Expanded(
+                child: GridView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemCount: images.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.5,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                  ),
+                  itemBuilder: (ctx, pos) {
+                    String image = images[pos];
+                    double border =
+                        (widget.controller.selectedAsset == image) ? 4 : 0;
+                    return BorderImage(
+                      border: border,
+                      image: image,
+                      onClick: () {
+                        widget.controller.selectBackground(pos);
+                        setState(() {});
+                      },
+                    );
+                  },
                 ),
-                itemBuilder: (ctx, pos) {
-                  String image = images[pos];
-                  double border =
-                      (widget.controller.selectedAsset == image) ? 4 : 0;
-                  return BorderImage(
-                    border: border,
-                    image: image,
-                    onClick: () {
-                      widget.controller.selectBackground(pos);
-                      setState(() {});
-                    },
-                  );
-                },
               ),
             ],
           ),
