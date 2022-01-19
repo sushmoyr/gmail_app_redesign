@@ -2,9 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/linearicons_free_icons.dart';
 
 class SideDrawer extends StatelessWidget {
-  const SideDrawer({Key? key}) : super(key: key);
+  const SideDrawer({Key? key, this.onThemeChooserClick}) : super(key: key);
+
+  final VoidCallback? onThemeChooserClick;
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +50,11 @@ class SideDrawer extends StatelessWidget {
                   indent: 8,
                 ),
                 ListTile(
-                  leading: Icon(CupertinoIcons.tray_fill),
+                  leading: Icon(Icons.inbox),
                   title: Text('Primary'),
                 ),
                 ListTile(
-                  leading: Icon(CupertinoIcons.map),
+                  leading: Icon(LineariconsFree.users),
                   title: Text('Social'),
                 ),
                 ListTile(
@@ -69,32 +74,41 @@ class SideDrawer extends StatelessWidget {
                   title: Text('Snoozed'),
                 ),
                 ListTile(
-                  leading: Icon(CupertinoIcons.tray_fill),
+                  leading: Icon(Icons.label_outlined),
                   title: Text('Important'),
                 ),
                 ListTile(
-                  leading: Icon(Icons.all_inbox),
+                  leading: Icon(Icons.send_outlined),
                   title: Text('Sent'),
                 ),
                 ListTile(
-                  leading: Icon(Icons.all_inbox),
-                  title: Text('Planned'),
+                  leading: Icon(FontAwesome.doc),
+                  title: Text('Draft'),
                 ),
                 ListTile(
-                  leading: Icon(Icons.all_inbox),
-                  title: Text('Draft'),
+                  leading: Icon(FontAwesome5.envelope_open),
+                  title: Text('Outbox'),
                 ),
                 ListTile(
                   leading: Icon(Icons.all_inbox),
                   title: Text('All mails'),
                 ),
                 ListTile(
-                  leading: Icon(Icons.all_inbox),
+                  leading: Icon(LineariconsFree.warning),
                   title: Text('Spam'),
                 ),
                 ListTile(
-                  leading: Icon(Icons.all_inbox),
+                  leading: Icon(Icons.delete_outlined),
                   title: Text('Trash'),
+                ),
+                Divider(
+                  color: Colors.white,
+                  indent: 8,
+                ),
+                ListTile(
+                  leading: Icon(Icons.format_paint),
+                  title: Text('Background'),
+                  onTap: onThemeChooserClick,
                 ),
               ],
             ),

@@ -1,15 +1,17 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gmail_app_redesign/controllers/background_selector_controller.dart';
 import 'package:gmail_app_redesign/data/models/user.dart';
-import 'package:gmail_app_redesign/widgets/bottom_sheet.dart';
+import 'package:gmail_app_redesign/widgets/background_selector.dart';
 import 'package:gmail_app_redesign/widgets/drawer.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final BackgroundSelectorController _backgroundSelector =
+      BackgroundSelectorController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +19,23 @@ class MainScreen extends StatelessWidget {
       key: _scaffoldKey,
       extendBodyBehindAppBar: false,
       backgroundColor: Colors.black,
-      drawer: SideDrawer(),
+      drawer: SideDrawer(
+        onThemeChooserClick: () {
+          showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            context: context,
+            builder: (ctx) =>
+                BackgroundSelector(controller: _backgroundSelector),
+          );
+        },
+      ),
       body: SafeArea(
           child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            'assets/backgrounds/theme1.png',
-            fit: BoxFit.cover,
+          Background(
+            controller: _backgroundSelector,
           ),
           SingleChildScrollView(
             child: Column(
@@ -139,11 +150,33 @@ class Avatar extends StatelessWidget {
   }
 }
 
-/*
-ElevatedButton(
-            onPressed: () {
-              _scaffoldKey.currentState!.openDrawer();
-            },
-            child: Text('Open Drawer'),
-          ),
- */
+class Background extends StatefulWidget {
+  const Background({Key? key, required this.controller}) : super(key: key);
+  final BackgroundSelectorController controller;
+
+  @override
+  _BackgroundState createState() => _BackgroundState();
+}
+
+class _BackgroundState extends State<Background> {
+  late String backgroundImage;
+
+  @override
+  void initState() {
+    widget.controller.addListener(() {
+      setState(() {
+        backgroundImage = widget.controller.selectedAsset;
+      });
+    });
+    backgroundImage = widget.controller.selectedAsset;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      backgroundImage,
+      fit: BoxFit.cover,
+    );
+  }
+}
